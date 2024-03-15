@@ -47,9 +47,6 @@ def step_impl(context):
     # load the database with new products
     #
 
-    
-    context.resp = requests.post(rest_endpoint, json=payload)
-    assert context.resp.status_code == HTTP_201_CREATED
     for row in context.table:
         payload = {
             "name": row['name'],
@@ -58,3 +55,6 @@ def step_impl(context):
             "available": row['available'] in ['True', 'true', '1'],
             "category": row['category']
         }
+        context.resp = requests.post(rest_endpoint, json=payload)
+        assert context.resp.status_code == HTTP_201_CREATED
+
